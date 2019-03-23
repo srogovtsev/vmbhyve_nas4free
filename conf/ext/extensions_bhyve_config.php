@@ -2,7 +2,7 @@
 /*
 	extensions_bhyve_config.php
 */ 
-define ( bhyve_VERSION, 0 );
+define ("bhyve_VERSION", 0 );
 require("auth.inc");
 require("guiconfig.inc");
 $pgtitle = array("Extensions", "Virtual Machine BHYVE", "Config");

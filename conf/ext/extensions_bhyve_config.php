@@ -72,10 +72,10 @@ $connected = @fsockopen("www.github.com", 80);
 if ( $connected ) {
 	fclose($connected);
 	unset($gitconfigfile);
-	$gitconfigfile = file_get_contents("https://raw.githubusercontent.com/alexey1234/vmbhyve_nas4free/master/conf/ext/extensions_bhyve_config.php");
+	$gitconfigfile = file_get_contents("https://raw.githubusercontent.com/srogovtsev/vmbhyve_nas4free/master/conf/ext/extensions_bhyve_config.php");
 	$git_ver = preg_split ( "/bhyve_VERSION,/", $gitconfigfile);
 	$git_ver = 0 + $git_ver[1];
-	mwexec2 ( "fetch -o /tmp/install.sh https://raw.githubusercontent.com/alexey1234/vmbhyve_nas4free/master/bhyve_install.sh" , $garbage , $fetch_ret_val ) ;
+	mwexec2 ( "fetch -o /tmp/install.sh https://raw.githubusercontent.com/srogovtsev/vmbhyve_nas4free/master/bhyve_install.sh" , $garbage , $fetch_ret_val ) ;
 				if ( is_file("/tmp/install.sh" ) ) {
 					// Fetch of install.sh succeeded
 					mwexec ("chmod a+x /tmp/install.sh");

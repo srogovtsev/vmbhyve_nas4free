@@ -62,7 +62,7 @@ mkdir -p ${START_FOLDER}/install_stage || exerr "ERROR: Could not create staging
 cd ${START_FOLDER}/install_stage || exerr "ERROR: Could not access staging directory!"
 
 echo "Retrieving the vmbhyve_nas4free branch as a zip file"
-fetch https://github.com/alexey1234/vmbhyve_nas4free/archive/master.zip || exerr "ERROR: Could not write to install directory!"
+fetch https://github.com/srogovtsev/vmbhyve_nas4free/archive/master.zip || exerr "ERROR: Could not write to install directory!"
 
 # Extract the files we want, stripping the leading directory, and exclude
 # the git nonsense

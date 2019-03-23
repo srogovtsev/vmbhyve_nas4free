@@ -97,6 +97,12 @@ else
 			# Create link
 			ln -s "$file" "${file##*/}"
 		done
+	# For each of the inc files in the extensions folder
+	for file in ${EXTENSION_ROOT}/conf/ext/*.inc
+		do
+			# Create link
+			ln -s "$file" "${file##*/}"
+		done
 	echo "Congratulations! The Bhyve extension was installed. Navigate to rudimentary config tab and push Save."
 	ACTION_MSG="fresh installed"
 fi

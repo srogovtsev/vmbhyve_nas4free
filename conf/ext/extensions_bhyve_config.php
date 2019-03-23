@@ -5,6 +5,7 @@
 define ("bhyve_VERSION", 0 );
 require("auth.inc");
 require("guiconfig.inc");
+require("extension-lib.inc");
 $pgtitle = array("Extensions", "Virtual Machine BHYVE", "Config");
 if (!isset($config['bhyve']) || !is_array($config['bhyve']))
 	$config['bhyve'] = array();
@@ -26,15 +27,13 @@ if (isset ($_POST["submit1"]) && $_POST["submit1"] =="Save") {
 					
 					}	
 			$config['bhyve']['homefolder'] = $_POST['homefolder'];
-			$i = 0;
-			if ( is_array($config['rc']['postinit'] ) && is_array( $config['rc']['postinit']['cmd'] ) ) {
-		    for ($i; $i < count($config['rc']['postinit']['cmd']);) {
-		    if (preg_match('|ext\/bhyve/|', $config['rc']['postinit']['cmd'][$i])) 	break;
-				++$i;	} 	
-			$config['rc']['postinit']['cmd'][$i] = $config['bhyve']['homefolder']."/conf/bin/bhyve_start.php";	
-				}
-			
-			write_config();
+			//I am too noob in PHP to figure out why the code wants reference below
+			$dummy = array();
+			$dummy['postinit'] = "/usr/local/bin/php-cgi -f {$config['bhyve']['homefolder']}/conf/bin/bhyve_start.php";
+			//the following will write config
+			ext_remove_rc_commands("bhyve");
+			ext_create_rc_commands("bhyve WebGui", $dummy['postinit']);
+
 			unlink_if_exists("/tmp/bhyve.install");			
 			unlink_if_exists ( "/usr/local/etc/rc.d/vm");
 			symlink ( $config['bhyve']['homefolder']."/conf/rc.d/vm" , "/usr/local/etc/rc.d/vm" );
@@ -46,12 +45,7 @@ if (isset ($_POST["submit1"]) && $_POST["submit1"] =="Save") {
 		//uninstall procedure
 			 //rc_stop_service('bhyve');
 	
-			if ( is_array($config['rc']['postinit'] ) && is_array( $config['rc']['postinit']['cmd'] ) ) {
-			for ($i = 0; $i < count($config['rc']['postinit']['cmd']);) {
-				if (preg_match('/bhyve_start/', $config['rc']['postinit']['cmd'][$i])) {	unset($config['rc']['postinit']['cmd'][$i]);} else{}
-				++$i;
-			  }
-		    }
+			ext_remove_rc_commands("bhyve");
 			unlink_if_exists("/usr/local/etc/rc.d/vm");
 			unlink_if_exists("/usr/local/sbin/vm");
 			mwexec ("rm -f /usr/local/www/ext/bhyve");
